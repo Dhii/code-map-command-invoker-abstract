@@ -73,24 +73,26 @@ abstract class AbstractCodeMapInvoker
     }
 
     /**
-     * Creates a new Invocation Failure exception.
+     * Creates a new Invocation Failure Exception.
      *
      * @since [*next-version*]
      *
-     * @param string|Stringable|null $message  The error message, if any.
-     * @param int|null               $code     The error code, if any.
-     * @param RootException|null     $previous The inner exception for chaining, if any.
-     * @param string|Stringable      $command  The command that failed invocation, if any.
-     * @param array|null             $args     The invocation arguments, if any.
+     * @param null|string|Stringable       $message  The error message, if any.
+     * @param null|int|string|Stringable   $code     The error code, if any.
+     * @param RootException|null           $previous The inner exception, if any.
+     * @param CommandInvokerInterface|null $invoker  The problematic invoker, if any.
+     * @param string|Stringable|null       $command  The command that failed, if any.
+     * @param array|null                   $args     The command arguments, if any.
      *
-     * @return InvocationFailureExceptionInterface The new exception.
+     * @return CommandInvokerException The new exception.
      */
     abstract protected function _createInvocationFailureException(
-            $message = null,
-            $code = null,
-            RootException $previous = null,
-            $command = null,
-            $args = null
+        $message = null,
+        $code = null,
+        RootException $previous = null,
+        CommandInvokerInterface $invoker = null,
+        $command = null,
+        $args = null
     );
 
     /**
