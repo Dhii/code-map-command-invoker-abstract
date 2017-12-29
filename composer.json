@@ -19,7 +19,7 @@
         "ptrofimov/xpmock": "^1.1",
         "dhii/php-cs-fixer-config": "^0.1",
         "codeclimate/php-test-reporter": "<=0.3.2",
-        "dhii/invoker-interface": "dev-develop"
+        "dhii/invoker-interface": "^0.1"
     },
     "suggest": {
         "dhii/invoker-abstract": "For awareness of concepts that are common to invokers",
