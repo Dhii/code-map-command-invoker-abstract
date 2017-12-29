@@ -156,4 +156,28 @@ class MapCallablesToCodesCapableTraitTest extends TestCase
 
         $_subject->_mapCallablesToCodes($traversable);
     }
+
+    /**
+     * Test that the `_mapCallablesToCodes()` fails correctly when given an invalid map.
+     *
+     * @since [*next-version*]
+     */
+    public function testMapCallablesToCodesFailInvalidMap()
+    {
+        $subject = $this->createInstance(['_createInvalidArgumentException', '__']);
+        $_subject = $this->reflect($subject);
+
+        $subject->expects($this->exactly(1))
+            ->method('_createInvalidArgumentException')
+            ->will($this->returnCallback(function ($message) {
+                return $this->createInvalidArgumentException($message);
+            }));
+        $subject->method('__')
+            ->will($this->returnCallback(function ($string) {
+                return $string;
+            }));
+
+        $this->setExpectedException('InvalidArgumentException');
+        $_subject->_mapCallablesToCodes(uniqid('map-'));
+    }
 }
