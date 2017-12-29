@@ -21,6 +21,10 @@
         "codeclimate/php-test-reporter": "<=0.3.2",
         "dhii/invoker-interface": "dev-develop"
     },
+    "suggest": {
+        "dhii/invoker-abstract": "For awareness of concepts that are common to invokers",
+        "dhii/invoker-base": "For standard concrete implementations of invocation exceptions and their factories"
+    },
     "autoload": {
         "psr-4": {
             "Dhii\\Invocation\\": "src"
