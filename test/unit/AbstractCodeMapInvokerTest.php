@@ -4,10 +4,6 @@ namespace Dhii\Invocation\UnitTest;
 
 use Xpmock\TestCase;
 use Dhii\Invocation\AbstractCodeMapInvoker as TestSubject;
-use InvalidArgumentException;
-use OutOfRangeException;
-use Traversable;
-use Dhii\Invocation\Exception\InvocationFailureExceptionInterface;
 
 /**
  * Tests {@see TestSubject}.
@@ -46,32 +42,6 @@ class AbstractCodeMapInvokerTest extends TestCase
         $mock = $this->getMockBuilder(static::TEST_SUBJECT_CLASSNAME)
                 ->setMethods($methods)
                 ->getMockForAbstractClass();
-        $mock->method('__')
-                ->will($this->returnCallback(function ($message) {
-                    return $message;
-                }));
-        $mock->method('_normalizeString')
-                ->will($this->returnCallback(function ($string) {
-                    return (string) $string;
-                }));
-        $mock->method('_createInvalidArgumentException')
-                ->will($this->returnCallback(function ($message) {
-                    return new InvalidArgumentException($message);
-                }));
-        $mock->method('_createOutOfRangeException')
-                ->will($this->returnCallback(function ($message) {
-                    return new OutOfRangeException($message);
-                }));
-        $mock->method('_createInvocationFailureException')
-                ->will($this->returnCallback(function ($message, $code = 0, $previous = null, $command = null, $args = []) use ($me) {
-                    return $me->createInvocationFailureException($message, $code, $previous, $command, $args);
-                }));
-        $mock->method('_normalizeArray')
-                ->will($this->returnCallback(function ($array) {
-                    return ($array instanceof Traversable)
-                            ? iterator_to_array($array)
-                            : (array) $array;
-                }));
 
         $this->reflect($mock)->_construct();
 
@@ -118,30 +88,6 @@ class AbstractCodeMapInvokerTest extends TestCase
     }
 
     /**
-     * Creates an Invocation Failure exception.
-     *
-     * @param string $message The error message.
-     *
-     * @return InvocationFailureExceptionInterface The new exception.
-     */
-    public function createInvocationFailureException($message = '', $code = 0, $previous = null, $command = null, $args = null)
-    {
-        $mock = $this->mockClassAndInterfaces(
-                'Exception',
-                ['Dhii\Invocation\Exception\InvocationFailureExceptionInterface'],
-                ['getCommand', 'getArgs', 'getCommandInvoker'],
-                [$message, $code, $previous]);
-        $mock->method('getCommand')
-                ->will($this->returnValue($command));
-        $mock->method('getArgs')
-                ->will($this->returnValue($args));
-        $mock->method('getCommandInvoker')
-                ->will($this->returnValue(null));
-
-        return $mock;
-    }
-
-    /**
      * Tests whether a valid instance of the test subject can be created.
      *
      * @since [*next-version*]
@@ -157,51 +103,13 @@ class AbstractCodeMapInvokerTest extends TestCase
         );
     }
 
-    /**
-     * Tests whether registering and invoking callables works as expected.
-     *
-     * @since [*next-version*]
-     */
-    public function testInvokeSuccess()
+    public function testConstruct()
     {
-        $code = uniqid('code-');
-        $callable = function ($arg) {
-            return $arg;
-        };
-        $args = [
-            uniqid('arg1-'),
-            uniqid('arg2-'),
-        ];
-
-        $subject = $this->createInstance(['_invokeByCode', '_getCallableByCode']);
-        $subject->expects($this->exactly(1))
-                ->method('_invokeByCode')
-                ->with(
-                    $this->equalTo($code),
-                    $this->equalTo($args)
-                );
-        $subject->method('_getCallableByCode')
-                ->will($this->returnCallback(function ($code) use ($callable) {
-                    return $callable;
-                }));
-        $_subject = $this->reflect($subject);
-
-        $_subject->_invoke($code, $args);
-    }
-
-    /**
-     * Tests whether registering and invoking callables fails as expected.
-     *
-     * @since [*next-version*]
-     */
-    public function testInvokeFailure()
-    {
-        $code = uniqid('code-');
-
         $subject = $this->createInstance();
         $_subject = $this->reflect($subject);
 
-        $this->setExpectedException('Dhii\Invocation\Exception\InvocationFailureExceptionInterface');
-        $_subject->_invoke($code, []);
+        $_subject->callableCodeMap = null;
+        $_subject->_construct();
+        $this->assertEquals([], $_subject->callableCodeMap, 'The protected constructor did not bring the subject to initial state');
     }
 }
