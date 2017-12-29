@@ -2,6 +2,7 @@
 
 namespace Dhii\Invocation\UnitTest;
 
+use OutOfRangeException;
 use Xpmock\TestCase;
 use Dhii\Invocation\MapCallablesToCodesCapableTrait as TestSubject;
 use ArrayIterator;
@@ -83,7 +84,7 @@ class MapCallablesToCodesCapableTraitTest extends TestCase
         $keys = array_keys($array);
 
         if (!isset($keys[$index])) {
-            throw new \OutOfRangeException(sprintf('No key exists at index #%1$s', $index));
+            throw new OutOfRangeException(sprintf('No key exists at index #%1$s', $index));
         }
 
         $key = $keys[$index];
