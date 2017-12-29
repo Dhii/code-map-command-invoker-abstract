@@ -2,6 +2,8 @@
 
 namespace Dhii\Invocation\UnitTest;
 
+use Exception as RootException;
+use InvalidArgumentException;
 use OutOfRangeException;
 use Xpmock\TestCase;
 use Dhii\Invocation\MapCallablesToCodesCapableTrait as TestSubject;
@@ -57,6 +59,20 @@ class MapCallablesToCodesCapableTraitTest extends TestCase
     public function mergeValues($destination, $source)
     {
         return array_keys(array_merge(array_flip($destination), array_flip($source)));
+    }
+
+    /**
+     * Creates an invalid argument exception.
+     *
+     * @param string         $message  The error message, if any.
+     * @param int            $code     The error code, if any.
+     * @param Exception|null $previous The inner exception, if any.
+     *
+     * @return InvalidArgumentException The new exception.
+     */
+    public function createInvalidArgumentException($message = '', $code = 0, RootException $previous = null)
+    {
+        return new InvalidArgumentException($message, $code, $previous);
     }
 
     /**
