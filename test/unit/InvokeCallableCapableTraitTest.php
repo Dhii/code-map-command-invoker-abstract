@@ -2,6 +2,7 @@
 
 namespace Dhii\Invocation\UnitTest;
 
+use Traversable;
 use Xpmock\TestCase;
 use Dhii\Invocation\InvokeCallableCapableTrait as TestSubject;
 use InvalidArgumentException;
@@ -37,6 +38,12 @@ class InvokeCallableCapableTraitTest extends TestCase
                 ->will($this->returnCallback(function ($message) {
                     return new InvalidArgumentException($message);
                 }));
+        $mock->method('_normalizeArray')
+            ->will($this->returnCallback(function($list) {
+                return $list instanceof Traversable
+                    ? iterator_to_array($list)
+                    : $list;
+            }));
 
         return $mock;
     }
