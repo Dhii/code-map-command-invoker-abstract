@@ -5,6 +5,7 @@ namespace Dhii\Invocation;
 use OutOfRangeException;
 use InvalidArgumentException;
 use Dhii\Util\String\StringableInterface as Stringable;
+use Traversable;
 
 /**
  * Functionality for mapping callables to codes.
@@ -19,13 +20,13 @@ trait InvokeByCodeCapableTrait
      * @since [*next-version*]
      *
      * @param string|Stringable $code The code of the functionality to invoke.
-     * @param array             $args The args to invoke with.
+     * @param array|Traversable $args The args to invoke with.
      *
      * @throws OutOfRangeException If no callable corresponds to the given code.
      *
      * @return mixed The result of the invocation.
      */
-    protected function _invokeByCode($code, array $args)
+    protected function _invokeByCode($code, $args)
     {
         $callable = $this->_getCallableByCode($code);
 
@@ -50,12 +51,12 @@ trait InvokeByCodeCapableTrait
      *
      * @since [*next-version*]
      *
-     * @param callable $callable The callable to invoke.
-     * @param array    $args     The arguments to invoke the callable with.
+     * @param callable          $callable The callable to invoke.
+     * @param array|Traversable $args     The arguments to invoke the callable with.
      *
      * @throws InvalidArgumentException If the callable is not callable.
      *
      * @return mixed The result of the invocation.
      */
-    abstract protected function _invokeCallable($callable, array $args);
+    abstract protected function _invokeCallable($callable, $args);
 }
