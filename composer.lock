@@ -114,12 +114,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Dhii/invoker-interface.git",
-                "reference": "70401e9174b4f0bd4f04cf3ba604fb632dfef296"
+                "reference": "97897228b5a263d05ef69fa04d4614b73663c228"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Dhii/invoker-interface/zipball/70401e9174b4f0bd4f04cf3ba604fb632dfef296",
-                "reference": "70401e9174b4f0bd4f04cf3ba604fb632dfef296",
+                "url": "https://api.github.com/repos/Dhii/invoker-interface/zipball/97897228b5a263d05ef69fa04d4614b73663c228",
+                "reference": "97897228b5a263d05ef69fa04d4614b73663c228",
                 "shasum": ""
             },
             "require": {
@@ -155,7 +155,7 @@
                 }
             ],
             "description": "Interfaces for command invocation",
-            "time": "2017-12-21T16:37:52+00:00"
+            "time": "2017-12-30T15:35:36+00:00"
         },
         {
             "name": "dhii/php-cs-fixer-config",
