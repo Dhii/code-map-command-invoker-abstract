@@ -5,6 +5,7 @@ namespace Dhii\Invocation;
 use Dhii\Util\String\StringableInterface as Stringable;
 use Exception as RootException;
 use InvalidArgumentException;
+use Traversable;
 
 /**
  * Functionality for invoking a callable.
@@ -18,21 +19,36 @@ trait InvokeCallableCapableTrait
      *
      * @since [*next-version*]
      *
-     * @param callable $callable The callable to invoke.
-     * @param array    $args     The arguments to invoke the callable with.
+     * @param callable          $callable The callable to invoke.
+     * @param array|Traversable $args     The arguments to invoke the callable with.
      *
      * @throws InvalidArgumentException If the callable is not callable.
      *
      * @return mixed The result of the invocation.
      */
-    protected function _invokeCallable($callable, array $args)
+    protected function _invokeCallable($callable, $args)
     {
         if (!is_callable($callable)) {
             throw $this->_createInvalidArgumentException($this->__('Callable is not callable'), null, null, $callable);
         }
 
+        $args = $this->_normalizeArray($args);
+
         return call_user_func_array($callable, $args);
     }
+
+    /**
+     * Normalizes a value into an array.
+     *
+     * @since [*next-version*]
+     *
+     * @param array|Traversable $value The value to normalize.
+     *
+     * @throws InvalidArgumentException If value cannot be normalized.
+     *
+     * @return array The normalized value.
+     */
+    abstract protected function _normalizeArray($value);
 
     /**
      * Creates a new invalid argument exception.
