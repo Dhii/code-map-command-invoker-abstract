@@ -30,7 +30,8 @@ trait CodeMapAwareTrait
      *
      * @param string|Stringable $code The code of the callable to retrieve.
      *
-     * @throws OutOfRangeException If no callable corresponds to the given code.
+     * @throws InvalidArgumentException If the code is not valid.
+     * @throws OutOfRangeException      If no callable corresponds to the given code.
      *
      * @return callable The callable that corresponds to the given code
      */
@@ -53,7 +54,7 @@ trait CodeMapAwareTrait
      * @param string|Stringable $code     The code to map the callable to.
      * @param callable          $callable The callable to map.
      *
-     * @throws InvalidArgumentException If the callable is not valid.
+     * @throws InvalidArgumentException If the code or callable is not valid.
      */
     protected function _mapCallableToCode($code, callable $callable)
     {
@@ -69,7 +70,8 @@ trait CodeMapAwareTrait
      *
      * @param string|Stringable $code The code to unmap from.
      *
-     * @throws OutOfRangeException If no mapping exists for the code.
+     * @throws InvalidArgumentException If the code or callable is not valid.
+     * @throws OutOfRangeException      If no mapping exists for the code.
      */
     protected function _unmapCallableFromCode($code)
     {

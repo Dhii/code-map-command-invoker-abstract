@@ -23,6 +23,7 @@ trait InvokeByCodeCapableTrait
      * @param array|Traversable $args The args to invoke with.
      *
      * @throws OutOfRangeException If no callable corresponds to the given code.
+     * @throws OutOfRangeException If the callable is not callable.
      *
      * @return mixed The result of the invocation.
      */

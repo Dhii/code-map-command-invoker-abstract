@@ -23,6 +23,7 @@ trait InvokeCallableCapableTrait
      * @param array|Traversable $args     The arguments to invoke the callable with.
      *
      * @throws InvalidArgumentException If the callable is not callable.
+     * @throws InvalidArgumentException if the args are not a valid list.
      *
      * @return mixed The result of the invocation.
      */
